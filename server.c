@@ -6,7 +6,7 @@
 /*   By: abouafso <abouafso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:37:34 by abouafso          #+#    #+#             */
-/*   Updated: 2024/03/18 01:53:41 by abouafso         ###   ########.fr       */
+/*   Updated: 2024/03/18 22:57:18 by abouafso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,19 +34,63 @@ void server_home(void)
     ft_putchar_fd('\n', 1);
     ft_putstr_fd("\033[0m", 1);
 }
-
-
-int main(int ac, char **av)
+void	sig_handler(int signal, siginfo_t *pid_info, void *j)
 {
-    (void)av;
+	static	int 	bit;
+	static	int 	pid;
+	static  char	c;
+
+	bit = 0;
+	c = 0;
 	
+	(void)j;
+	pid = pid_info->si_pid;
+
+	if(pid != pid_info->si_pid)
+	{
+		bit = 0;
+		c = 0;
+	}
+	c = c << 1 | (signal - SIGUSR1);
+	bit++;
+	if(bit == 8)
+	{
+		if (c == 0)
+			write(1, "\n", 1);
+		else
+			write(1, &c, 1);
+		bit = 0;
+		c = 0;
+	}
+}
+
+int main(void)
+{
 	struct sigaction	sig;
-	sig.sa_sigaction = 
+    //(void)av;
+	
+	sig.sa_sigaction = sig_handler;
 	sig.sa_flags = SA_SIGINFO;
 	
-    if(ac != 1)
-        return(1);
-
-	siginfo_t ;
+	if (sigaction(SIGUSR1, &sig, 0) == -1 || sigaction(SIGUSR2, &sig, 0) == -1)
+	{
+		ft_putstr_fd("Error\n", 2);
+		exit(1);
+	}
+    // if(ac != 1)
+    //     return(1);
+	// if(sigaction(SIGUSR1, &sig, 0) == -1)
+	// {
+	// 	ft_putstr_fd("error SIGUSR1", 2);
+	// 	exit(EXIT_FAILURE);
+	// }
+	// else if(sigaction(SIGUSR2, &sig, 0))
+	// {
+	// 	ft_putstr_fd("error SIGUSR2", 2);
+	// 	exit(EXIT_FAILURE);
+	// }	
     server_home();
+	while(1)
+		pause();
+	return (0);
 }

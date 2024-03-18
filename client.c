@@ -6,7 +6,7 @@
 /*   By: abouafso <abouafso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/15 06:43:07 by abouafso          #+#    #+#             */
-/*   Updated: 2024/03/16 14:19:17 by abouafso         ###   ########.fr       */
+/*   Updated: 2024/03/18 23:13:38 by abouafso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,21 @@
 
 void    send_charbits(int pid, char c)
 {
-    int i;
+	int	i;
+	int	sig;
 
-    i = 8;
-    while(i--)
-    {
-        int sig;
-    
-        if((c >> i) & 1)
-            sig = SIGUSR2;
-        else
-            sig = SIGUSR1;
-        kill(pid, sig);
-        usleep(500);
-    }
+	i = 7;
+	while (i >= 0)
+	{
+		sig = SIGUSR1;
+		if ((c >> i) & 1)
+			sig = SIGUSR2;
+		kill(pid, sig);
+		usleep(500);
+		i--;
+	}
 }
+
 int main(int ac, char **av)
 {
     int     i;
@@ -46,6 +46,7 @@ int main(int ac, char **av)
     while(av[2])
     {
         send_charbits(pid, av[2][i]);
+		printf("JJJJJJ\n");
         i++;
     }
     send_charbits(pid, '\0');

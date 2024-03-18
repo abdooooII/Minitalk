@@ -6,7 +6,7 @@
 /*   By: abouafso <abouafso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/13 22:27:31 by abouafso          #+#    #+#             */
-/*   Updated: 2024/03/16 14:01:27 by abouafso         ###   ########.fr       */
+/*   Updated: 2024/03/18 16:25:03 by abouafso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ void    ft_putnbr(int nb);
 int     ft_atoi(char *str);
 void    send_charbits(int pid, char c);
 void    server_home(void);
+void	sig_handler(int signal, siginfo_t *pid_info, void *j);
 
 
 #endif
