@@ -6,7 +6,7 @@
 /*   By: abouafso <abouafso@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/03/16 01:37:34 by abouafso          #+#    #+#             */
-/*   Updated: 2024/03/18 23:19:33 by abouafso         ###   ########.fr       */
+/*   Updated: 2024/03/19 20:22:15 by abouafso         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ void server_home(void)
     ft_putstr_fd("                  PID : ", 1);
     ft_putnbr(getpid());
     ft_putchar_fd('\n', 1);
-    ft_putstr_fd("\033[0;32m", 1);
+    ft_putstr_fd("\033[0;34m", 1);
     ft_putstr_fd("░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░░\n", 1);
     ft_putchar_fd('\n', 1);
     ft_putstr_fd("\033[0m", 1);
@@ -41,9 +41,6 @@ void	sig_handler(int signal, siginfo_t *pid_info, void *j)
 	static	int 	pid;
 	static  char	c;
 
-	bit = 0;
-	pid = 0;
-	pid = pid_info->si_pid;
 
 	if(pid != pid_info->si_pid)
 	{
@@ -61,6 +58,7 @@ void	sig_handler(int signal, siginfo_t *pid_info, void *j)
 		bit = 0;
 		c = 0;
 	}
+	pid = pid_info->si_pid;
 }
 
 int main(int ac, char **av)
